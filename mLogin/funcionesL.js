@@ -1,6 +1,6 @@
 //Hace la validacion del usuario y la contraseña
 $("#frmLogin").submit(function(e){
-
+    $("#actualizar").attr("disabled","disabled");
     var usuario    = $("#loginUsuario").val();
     var contra     = $("#loginContra").val();
 
@@ -14,6 +14,9 @@ $("#frmLogin").submit(function(e){
              //console.log(respuesta);
             var registros=dataArray.cRegistros;
             var dias=dataArray.dias;
+            
+            
+
             if (registros !=0 ) {//existe el usuario
                 if(dias < 0){//caducidad
                     swal({
@@ -36,21 +39,73 @@ $("#frmLogin").submit(function(e){
                     });
 
                 }else{
-                    $("#contentLogin").hide();
-                    $("#contentSistema").show();
 
-                    persona=dataArray.result.persona;
-                    idUsuario=dataArray.result.id_usuario;
-                    idDato=dataArray.result.id_dato;
+                    if (document.getElementById('check').checked ==true) {//esta activado el switch
+                        console.log("esta activado");
+                        $('#modalcontra').modal();
+                        $('#actualizar').on("click",function (){//dar clic al boton actualizar contraseña
+                            
+                            var contra     = $("#contraseña-nueva").val();
+                            var id=dataArray.result.id_usuario;
+                            $.ajax({
+                                url:"../mLogin/actualizar_contra.php",
+                                type:"POST",
+                                dateType:"html",
+                                data:{id,contra},
+                                success:function(respuesta){
+                                    console.log(respuesta);
+                                    
+                                    
+                                    $("#contentLogin").hide();
+                                    $("#modalcontra").modal('hide');
+                                    $("#contentSistema").show();
 
-                    $("#titular").text(persona);
+                                    persona=dataArray.result.persona;
+                                    idUsuario=dataArray.result.id_usuario;
+                                    idDato=dataArray.result.id_dato;
+                                    
 
-                    $('#sidebar').toggleClass('active');
-                    permisos(dataArray.result.permiso_datos_persona,dataArray.result.permiso_ecivil,dataArray.result.permiso_usuario,dataArray.result.permiso_temas);
-                    preloader(1,'Asitencia del personal');
-                    actividad  ="Ingreso al sistema";
-                    log(actividad,dataArray.result.id_usuario);
-                    verAsistencias();
+                                    $("#titular").text(persona);
+
+                                    $('#sidebar').toggleClass('active');
+                                    permisos(dataArray.result.permiso_datos_persona,dataArray.result.permiso_ecivil,dataArray.result.permiso_usuario,dataArray.result.permiso_temas);
+                                    preloader(1,'Asitencia del personal');
+                                    actividad  ="Ingreso al sistema";
+                                    log(actividad,dataArray.result.id_usuario);
+                                    verAsistencias();
+                                    
+                                },
+                                error:function(xhr,status){
+                                    alert("Error al actualizar contraseña"); 
+                                },
+                            });
+                                
+                            e.preventDefault();
+                            return false;
+
+                        });
+                       
+                    } else {
+                        
+                        $("#contentLogin").hide();
+                        $("#contentSistema").show();
+
+                        persona=dataArray.result.persona;
+                        idUsuario=dataArray.result.id_usuario;
+                        idDato=dataArray.result.id_dato;
+                        
+
+                        $("#titular").text(persona);
+
+                        $('#sidebar').toggleClass('active');
+                        permisos(dataArray.result.permiso_datos_persona,dataArray.result.permiso_ecivil,dataArray.result.permiso_usuario,dataArray.result.permiso_temas);
+                        preloader(1,'Asitencia del personal');
+                        actividad  ="Ingreso al sistema";
+                        log(actividad,dataArray.result.id_usuario);
+                        verAsistencias();
+                    }
+
+                    
                 }
             }else{
                 swal({
@@ -84,6 +139,50 @@ $("#frmLogin").submit(function(e){
     return false;
 });
 
+
+//Generar contraseña
+function generarContra(numero) {
+    var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789";
+    var contraseña = "";
+    for (i=0; i<numero; i++) contraseña += caracteres.charAt(Math.floor(Math.random()*caracteres.length));
+    $("#contraseña-nueva").val(contraseña);
+    $("#contraseña-confirmar").val(contraseña);
+    validarcontra();
+    swal("Nueva contraseña generada", " "+contraseña, "success");
+}
+
+
+//Actualizar contraseñas
+
+
+
+//FUNCION VALIDAR
+function validarcontra() {
+    var contra = document.getElementById("contraseña-nueva").value;
+    var confcontra = document.getElementById("contraseña-confirmar").value;
+    if (contra.length > 7 && confcontra.length > 7 && contra==confcontra) {
+        console.log("mayores a 7 digitos");
+        $('#actualizar').removeAttr("disabled");
+        return true;
+    } else {
+        console.log("menores a 8 digitos");
+        $("#actualizar").attr("disabled","disabled");
+        return false;
+    }
+}
+
+//VALIDAR CONTRASEÑA    
+$("#contraseña-nueva").keyup(function(){
+    validarcontra()
+    
+});
+//VALIDAR CONTRASEÑA ACTUAL
+$("#contraseña-confirmar").keyup(function(){
+    validarcontra()
+});
+
+
+
 //permisoa partes del menu
 function permisos(datos,ecivil,usuarios,temas){
     if(datos=='si'){
@@ -110,6 +209,7 @@ function permisos(datos,ecivil,usuarios,temas){
         $("#liTemas").hide();
     }
 }
+
 
 //Revisa si existe el usuario y aplica el tema del mismo
 $("#loginUsuario").keyup(function(){
