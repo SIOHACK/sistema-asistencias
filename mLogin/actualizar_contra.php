@@ -16,7 +16,6 @@ $cadena = "UPDATE usuarios
 				id_usuario= $id";
 $actualizar = mysqli_query($conexionLi, $cadena);
 
-
 //En caso de error imprime
 print_r(mysqli_error($conexionLi));
 //Cierro la conexion

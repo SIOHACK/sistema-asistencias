@@ -16,7 +16,7 @@
                 <div class="col text-center">
                     <label>Desea cambiar la contraseña:</label>
                     
-                    <input type="checkbox" class="toggle-two" data-toggle="toggle" data-onstyle="outline-success" data-width="60" data-offstyle="outline-warning" data-on="<i class='fa fa-check'></i> Si" data-off="<i class='fa fa-times'></i> No" id="check" >
+                    <input type="checkbox" class="toggle-two" data-toggle="toggle" data-onstyle="outline-success" data-width="60" data-offstyle="outline-warning" data-on="<i class='fa fa-check'></i> Si" data-off="<i class='fa fa-times'></i> No" id="check" checked>
                     <br>
                     
                     <br>

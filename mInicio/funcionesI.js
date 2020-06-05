@@ -459,3 +459,69 @@ $('#scroll').click(function(){
     $("html, body").animate({ scrollTop: 0 }, 600); 
     return false; 
 });
+
+
+// Cambiar contraseña
+
+
+function cambiar_contra() {
+    $('#modalmenucontra').modal();
+        var id = $("#inicioIdusuario").val();
+        console.log(idUsuario);
+        $('#actualizarcontra').on("click",function (){        
+            var contra = $("#nueva_contra").val();
+            console.log(contra);
+            $.ajax({
+                url:"../mLogin/actualizar_contra.php",
+                type:"POST",
+                dateType:"html",
+                data:{id,contra},
+                success:function(respuesta){
+                    
+                $("#modalmenucontra").modal('hide');
+                swal("La constraseña se actualizó correctamente");
+                limpiarmodalmenu();
+
+
+            },
+            error:function(xhr,status){
+                console.log("Error al actualizar la contraseña"); 
+            },
+        });
+        return false;
+    });
+}
+function generarMenuContra(numero) {
+    var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789";
+    var contraseña = "";
+    for (i=0; i<numero; i++) contraseña += caracteres.charAt(Math.floor(Math.random()*caracteres.length));
+    $("#nueva_contra").val(contraseña);
+    $("#verificar_contra").val(contraseña);
+    validarPassIndex();
+    swal("Nueva contraseña generada", " "+contraseña, "success");
+}
+
+//Validacion de contraseña al teclear
+$("#nueva_contra").keyup(function(){
+    validarPassIndex();
+});
+$("#verificar_contra").keyup(function(){
+    validarPassIndex();
+});
+
+//Validar contraseña
+function validarPassIndex() {
+    var pass = document.getElementById("nueva_contra").value;
+    var rePass = document.getElementById("verificar_contra").value;
+    if (pass.length > 7 && rePass.length > 7 && pass == rePass) {
+        $('#actualizarcontra').removeAttr("disabled");
+    } else {
+        $("#actualizarcontra").attr("disabled","disabled");
+    }
+}
+
+//Limpiar campos del modal
+function limpiarmodalmenu(params) {
+    $("#nueva_contra").val("");
+    $("#verificar_contra").val("");
+}

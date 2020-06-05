@@ -43,6 +43,8 @@ $("#frmLogin").submit(function(e){
                     if (document.getElementById('check').checked ==true) {//esta activado el switch
                         console.log("esta activado");
                         $('#modalcontra').modal();
+                        var idu=dataArray.result.id_usuario;
+                        console.log(idu);
                         $('#actualizar').on("click",function (){//dar clic al boton actualizar contraseña
                             
                             var contra     = $("#contraseña-nueva").val();
@@ -53,7 +55,7 @@ $("#frmLogin").submit(function(e){
                                 dateType:"html",
                                 data:{id,contra},
                                 success:function(respuesta){
-                                    console.log(respuesta);
+                                    console.log(id);
                                     
                                     
                                     $("#contentLogin").hide();
