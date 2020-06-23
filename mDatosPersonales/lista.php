@@ -24,6 +24,9 @@ $cadena = "SELECT
 $consultar = mysqli_query($conexionLi, $cadena);
 //$row = mysqli_fetch_array($consultar);
 
+
+
+
 ?>
 <div class="table-responsive">
 <table id="example<?php echo $varGral;?>" class="table table-striped table-bordered" style="width:100%">
@@ -36,6 +39,7 @@ $consultar = mysqli_query($conexionLi, $cadena);
                 <th scope="col">Datos</th>
                 <th scope="col">Foto</th>
                 <th scope="col">Audio</th>
+                <th scope="col">Horario</th>
                 <th scope="col">Clave</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Ap. Paterno</th>
@@ -51,7 +55,13 @@ $consultar = mysqli_query($conexionLi, $cadena);
         $n=1;
         while( $row = mysqli_fetch_array($consultar) ) {
 
+
             $id          = $row[0];
+
+
+            $cadenahorario = "SELECT id_datos_persona, id_horario, turno, l_entrada, l_salida, m_entrada, m_salida, mi_entrada, mi_salida, j_entrada, j_salida, v_entrada, v_salida, s_entrada, s_salida, d_entrada, d_salida FROM horarios WHERE id_datos_persona = '$id'";
+
+            $consultarhorario = mysqli_query($conexionLi, $cadenahorario);
 
             if ($row[1] == 1) {
                 $chkChecado    = "checked";
@@ -91,6 +101,22 @@ $consultar = mysqli_query($conexionLi, $cadena);
                 $tFoto="No";
             }
 
+            $row2 = mysqli_fetch_array($consultarhorario);
+
+            if ($id == $row2[0]) {
+                $icoHorario="<i class='fas fa-clock '></i>";
+                $vHorario="Si";
+                
+            }else{
+                
+                $icoHorario="<i class='fas fa-times fa-lg'></i>";
+                $vHorario="No";
+                
+            }
+            
+            
+            
+
             ?>
             <tr class="centrar">
                 <th scope="row" class="textoBase">
@@ -118,6 +144,11 @@ $consultar = mysqli_query($conexionLi, $cadena);
                 <td>
                     <button <?php echo $dtnDesabilita?> type="button" class="audio btn btn-link btn-sm activo"  id="btnSonido<?php echo $varGral?><?php echo $n?>" onclick="hablar('<?php echo $sonido?>')">
                     <i id="icoSound<?php echo $varGral?><?php echo $n?>" class="<?php echo $iconSound?>"></i>
+                    </button>
+                </td>
+                <td>
+                    <button <?php echo $dtnDesabilita?> type="button" class="horario btn btn-outline-secondary btn-sm activo"  id="btnHorario<?php echo $varGral?><?php echo $n?>" onclick="abrirModalHorario('<?php echo $id?>','<?php echo $nCompleto?>','<?php echo $vHorario?>','<?php echo $row2[2] ?>','<?php echo $row2[3] ?>','<?php echo $row2[4] ?>','<?php echo $row2[5] ?>','<?php echo $row2[6] ?>','<?php echo $row2[7] ?>','<?php echo $row2[8] ?>','<?php echo $row2[9] ?>','<?php echo $row2[10] ?>','<?php echo $row2[11] ?>','<?php echo $row2[12] ?>','<?php echo $row2[13] ?>','<?php echo $row2[14] ?>','<?php echo $row2[15] ?>','<?php echo $row2[16] ?>')">
+                        <?php echo $icoHorario?>
                     </button>
                 </td>
                 <td>
@@ -163,6 +194,7 @@ $consultar = mysqli_query($conexionLi, $cadena);
                 <th scope="col">Datos</th>
                 <th scope="col">Foto</th>
                 <th scope="col">Audio</th>
+                <th scope="col">Horario</th>
                 <th scope="col">Clave</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Ap. Paterno</th>

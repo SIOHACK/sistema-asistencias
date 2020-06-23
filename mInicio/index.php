@@ -156,7 +156,7 @@ $fecha=date("Y-m-d");
                             <button type="button" class="btn btn-success" id="actualizarcontra" disabled  >Actualizar contraseña</button>
                             <button type="button" class="btn btn-success" id="generarcontra" onclick="generarMenuContra(8)">Generar contraseña</button>
 
-                        </div>
+                        </div>                        
                     </div>
                 </div>
             </div>
@@ -170,6 +170,9 @@ $fecha=date("Y-m-d");
     <!-- Modal de Foto -->
         <?php include'../modales/modalFoto.php'; ?>
     <!-- Modal de Foto -->
+    <!-- Modal de Horario -->
+    <?php include'../modales/modalHorario.php'; ?>
+    <!-- Modal de Horario -->
     <!-- Modal de PDF -->
         <?php include'../modales/modalPDF.php'; ?>
     <!-- Modal de PDF -->

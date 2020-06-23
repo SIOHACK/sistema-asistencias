@@ -109,8 +109,10 @@ function aplicarTema(id,validador){
                     var idUser=$("#inicioIdusuario").val();
 
                     $('#mnuColapsado').click();
+                    
 
                     log(actividad,idUser);
+                    sonidoTema();
                     $("html, body").animate({ scrollTop: 0 }, 1000); 
                     return false; 
                 }
@@ -137,6 +139,13 @@ function relacionarTema(idTema){
             alert("Error en metodo AJAX"); 
         },
     });
+}
+
+// Se escucha el sonido al cambiar de tema
+function sonidoTema() {
+    var generarSonido = new Audio();
+    generarSonido.src = "../sonidos/Synth_Whoosh.mp3";
+    generarSonido.play();
 }
 
 function preloader(seg,mensaje){
