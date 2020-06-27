@@ -724,6 +724,7 @@ function subirHorario() {
     var sabadoS = $("#SabadoSalida").val();
     var domingoE = $("#DomingoEntrada").val();
     var domingoS = $("#DomingoSalida").val();
+    var nombreP = $("#txtTitularHorario").text();
 
     console.log(idDatos, turno, lunesE);
 
@@ -756,7 +757,7 @@ function subirHorario() {
                     //selectTwo();
                     alertify.success("<i class='fa fa-save fa-lg'></i>", 2);
                     // $('#nombre').focus();
-                    // actividad  ="Se ha creado un horario para la persona " + ;
+                    actividad  ="Se ha creado un horario para la persona " + nombreP;
                     var idUser=$("#inicioIdusuario").val();
                     log(actividad,idUser);
                     $('#modalHorario').modal('hide');
@@ -778,7 +779,7 @@ function subirHorario() {
 
 
 function actualizarHorario() {
-    var nombreP = $("#txtTitularHorario").val();
+    var nombreP = $("#txtTitularHorario").text();
     var idDatos = $("#IdhE").text();
     var turno = $("#turnoE").val(); 
     var lunesE = $("#LunesEntradaE").val();
@@ -796,7 +797,7 @@ function actualizarHorario() {
     var domingoE = $("#DomingoEntradaE").val();
     var domingoS = $("#DomingoSalidaE").val();
 
-    console.log(idDatos, turno, lunesE);
+    console.log(""+nombreP);
 
     swal({
         title: "¿Estas Seguro?",

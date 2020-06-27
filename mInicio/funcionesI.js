@@ -17,6 +17,12 @@ function ocultarSecciones(){
     $("#editar-EC").hide();
     $("#Listado-EC").hide();
     //USUARIOS
+
+    //TEMAS
+    $("#temas").hide();
+    $("#guardar-TM").hide();
+    $("#editar-TM").hide();
+    $("#Listado-TM").hide();
 }
 
 function verAsistencias(){
@@ -68,6 +74,22 @@ function verUsuarios(){
     ocultarSecciones();
 }
 
+function verTemas() {
+    ocultarSecciones();
+    $("#lblTitular").text("Temas");
+
+    $("#editar-TM").hide();
+    $("#guardar-TM").hide();
+    $("#Listado-TM").fadeIn();
+    $("#frmGuardar-TM")[0].reset();
+    //$("#frmActualizar-TM")[0].reset();
+    $("#badgeInfo").text("Lista");
+
+    $("#temas").show();
+    llenar_lista_TM();
+    var idTema=$("#inicioIdTema").val()
+    aplicarTema(idTema,'otro');  
+}
 
 
 function abrirModalPDF(id,ruta,modulo) {

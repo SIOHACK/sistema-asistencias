@@ -1,3 +1,7 @@
+//VARIABLE GLOBAL PARA NOMBRAR LOS ELEMENTOS DE LOS  FORMULARIOS
+//Temas-TM 
+var nombreModulo_TM="Temas";
+
 function exportar(){
     valor=$("#listaTemas").val();
     console.log(valor);
@@ -82,14 +86,14 @@ function abrirModalCarga(mensaje) {
 }
 
 function cerrarModalCarga(alerta="Se ha ejecutado la acción exitosamente") {
-    alertify.success(alerta,1);
+    //alertify.success(alerta,1);
     $("#modalCarga").modal("hide");
 }
 
 function importarArchivo(){
-    var files = $('#image')[0].files[0];
+    var files = $('#imagen')[0].files[0];
     var archivo=files.name;
-    var ruta= "Temas/"+archivo;
+    var ruta= "../expImpTemas/Temas/"+archivo;
 
     console.log(ruta);
     
@@ -106,7 +110,7 @@ function importarArchivo(){
             var hora_registro     = data[tema].hora_registro;
 
             $.ajax({
-                url:"importar.php",
+                url:"../expImpTemas/importar.php",
                 type:"POST",
                 dateType:"html",
                 data:{nombre_tema,color_letra,color_base,color_base_fuerte,color_borde,fecha_registro,hora_registro},
@@ -138,3 +142,60 @@ function importarArchivo(){
     });
 }
 
+function llenar_lista_TM() {
+    abrirModalCarga('Cargando Lista');
+    $("#frmGuardar-TM")[0].reset();
+    $("#Listado-TM").hide();
+    $.ajax({
+        url:"../expImpTemas/lista.php",
+        type:"POST",
+        dateType:"html",
+        data:{},
+        success:function(respuesta){
+            $("#Listado-TM").html(respuesta);
+            $("#Listado-TM").fadeIn("slow");
+            cerrarModalCarga();      
+            $("#nombre").focus();
+        },
+        error:function(xhr,status){
+            alert("Error en metodo AJAX"); 
+        },
+    });
+}
+
+$("#btnCancelarG-TM , #btnCancelarA-TM").click(function(){
+    $("#editar-TM").hide();
+    $("#guardar-TM").hide();
+
+    $("#lblTitular").text(nombreModulo_TM);
+    $("#badgeInfo").text("Lista");
+
+    $("#Listado-TM").fadeIn();
+ 
+});
+
+
+function nuevo_registro_TM() {
+    $("#lblTitular").text(nombreModulo_TM);
+
+    $("#badgeInfo").text("Nuevo registro");
+
+    $("#Listado-TM").hide();
+    $("#guardar-TM").fadeIn();
+    $('#frmGuardar-TM')[0].reset();
+    $("#nombre").focus();
+}
+
+function llenar_formulario_TM() {
+    //console.log(id);
+    //$("#eIdFC").val(id);
+    //$("#eDesc").val(edesc);
+
+    $("#lblTitular").text(nombreModulo_TM);
+    $("#badgeInfo").text("Modificar datos");
+
+    $("#guardar-TM").hide();
+    $("#Listado-TM").hide();
+    $("#editar-TM").fadeIn();
+    $("#nombre").focus();
+}

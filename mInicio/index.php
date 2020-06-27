@@ -126,6 +126,21 @@ $fecha=date("Y-m-d");
                 <section id="Listado-EC" class="animated  fadeIn contenedor" style="display:none;"></section>
             </div>       
 
+            <div class="container" id="temas">
+                <section id="guardar-TM" style="display:none;">
+                    <?php
+                        include'../expImpTemas/formGuardar.php';
+                    ?>
+                </section>
+
+                <section id="editar-TM" style="display:none;">
+                    <?php
+                        include'../expImpTemas/formEditar.php';
+                    ?>
+                </section>
+                
+                <section id="Listado-TM" class="animated  fadeIn contenedor" style="display:none;"></section>
+            </div>
         </div>
 
     </div>
@@ -188,6 +203,7 @@ $fecha=date("Y-m-d");
     <script src="../mLogin/funcionesL.js"></script> <!-- Login -->
     <script src="../mDatosPersonales/funcionesDP.js"></script> <!-- Datos Personales --> 
     <script src="../mEstadoCivil/funcionesEC.js"></script> <!-- Estado Civil -->
+    <script src="../expImpTemas/script.js"></script> <!-- Temas -->
     <!-- DataTables -->
     <script src="../plugins/dataTablesB4/js/jquery.dataTables.min.js"></script>
     <script src="../plugins/dataTablesB4/js/dataTables.bootstrap4.min.js"></script>
